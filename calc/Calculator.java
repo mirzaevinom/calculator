@@ -1,47 +1,78 @@
-//Usually you will require both swing and awt packages
-// even if you are working with just swings.
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 class Calculator {
-    public static JFrame frame;
-    public static JTextArea  textArea;
-    public static JButton button7, button8, button9;
-    public static boolean equalsClicked = false;
-    public static boolean invalidExpression = false;
+    public JFrame frame;
+    public JTextArea  textArea;
+    public JButton button7, button8, button9;
+    public boolean equalsClicked = false;
+    public boolean invalidExpression = false;
+    public JPanel panel;
+    public ArrayList<JButton> numberButtons;
+    public JButton buttonDot, buttonEqual, buttonClear, 
+    buttonLeftPar, buttonRightPar, buttonDivide, buttonMultiply,
+    buttonSubtract, buttonAdd, buttonDel;
+    public GridBagConstraints gbc;
 
     public static void main(String args[]) {
 
         Calculator myCalc = new Calculator();
 
-        myCalc.creatFrame();
+        myCalc.initializeUI();
 
-        // JTextArea textArea = new JTextArea();
-        
+    }
+    public void initializeUI(){
+        this.initFrame();
+        this.initPanel();
+        this.initDisplayArea();
+        this.initNumberButtons();
+        this.initDot();
+        this.initEqual();
+        this.initClearDelete();
+        this.initParanthesis();
+        this.initOperators();
+        frame.setVisible(true);        
+
+    }
+
+    public void initFrame(){
+        //Creating the Frame
+        frame = new JFrame("Calculator");
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null); // Move window to center
+        frame.setSize(300, 400);
+        frame.setResizable(false);
+        frame.setVisible(true);        
+    }
+
+
+    public void initPanel(){
+        panel = new JPanel();
+        panel.setBackground(Color.DARK_GRAY);
+        GridBagLayout frameLayout = new GridBagLayout();
+        panel.setLayout(frameLayout);
+
+        frame.setContentPane(panel);
+    }
+
+    public void initDisplayArea(){
         textArea = new JTextArea(2,1);
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
         textArea.setEnabled(false);
         Font font1 = new Font("Arial", Font.BOLD, 30);
         textArea.setBackground(Color.WHITE);
-        textArea.setForeground(Color.WHITE);
-
-        
         textArea.setFont(font1);
-        JPanel panel = new JPanel();
-        
-        panel.setBackground(Color.DARK_GRAY);
-        frame.setContentPane(panel);
-        frame.setVisible(true);
-        // frame.add(panel);
-        
-        GridBagLayout frameLayout = new GridBagLayout();
-        panel.setLayout(frameLayout);
 
-        GridBagConstraints gbc = myCalc.getDisplayGBC();
+        gbc = this.getDisplayGBC();
         panel.add(textArea, gbc);
+    }
+
+    public void initNumberButtons(){
+
         ArrayList<JButton> numberButtons = new ArrayList<JButton>();
         for (int i=0; i<10; i++){
             int row, col;
@@ -52,86 +83,86 @@ class Calculator {
                 row = 3 - (i-1)/3;
                 col = (i-1)%3;
             }
-            gbc = myCalc.getButtonGBC(row, col);
+            gbc = this.getButtonGBC(row, col);
+
             JButton button = new JButton(""+i);
-            myCalc.setNumberListener(button);
-            button = myCalc.setNumberColors(button);
+            this.setNumberListener(button);
+            button = this.setNumberColors(button);
             panel.add(button, gbc);
             numberButtons.add(button);
             
         }
-  
-        gbc = myCalc.getButtonGBC(4, 1);
-        JButton buttonDot = new JButton(".");
-        myCalc.setNumberListener(buttonDot);
-        buttonDot = myCalc.setNumberColors(buttonDot);
+    }
 
+    public void initDot(){
+        GridBagConstraints gbc = this.getButtonGBC(4, 1);
+        buttonDot = new JButton(".");
+        this.setNumberListener(buttonDot);
+        buttonDot = this.setNumberColors(buttonDot);
         panel.add(buttonDot, gbc);
 
-        gbc = myCalc.getButtonGBC(4, 2);
-        JButton buttonEqual = new JButton("=");
-        buttonEqual = myCalc.setNumberColors(buttonEqual);
-        myCalc.setEqualListener(buttonEqual);
-        panel.add(buttonEqual, gbc);
+    }
 
-        gbc = myCalc.getButtonGBC(0, 0);
-        JButton buttonClear = new JButton("C");
-        myCalc.setClearListener(buttonClear);
+    public void initEqual(){
+
+        gbc = this.getButtonGBC(4, 2);
+        buttonEqual = new JButton("=");
+        buttonEqual = this.setNumberColors(buttonEqual);
+        this.setEqualListener(buttonEqual);
+        panel.add(buttonEqual, gbc);
+    }
+
+    public void initClearDelete(){
+        gbc = this.getButtonGBC(0, 0);
+        buttonClear = new JButton("C");
+        this.setClearListener(buttonClear);
         panel.add(buttonClear, gbc);
 
-        gbc = myCalc.getButtonGBC(0, 1);
-        JButton buttonLeftPar = new JButton("(");
-        myCalc.setNumberListener(buttonLeftPar);
+        gbc = this.getButtonGBC(0, 3);
+        buttonDel = new JButton("←");
+        this.setDeleteListener(buttonDel);
+        panel.add(buttonDel, gbc);        
+    }
+    public void initParanthesis(){
+
+        gbc = this.getButtonGBC(0, 1);
+        buttonLeftPar = new JButton("(");
+        this.setNumberListener(buttonLeftPar);
         panel.add(buttonLeftPar, gbc);
 
-        gbc = myCalc.getButtonGBC(0, 2);
-        JButton buttonRightPar = new JButton(")");
-        myCalc.setNumberListener(buttonRightPar);
+        gbc = this.getButtonGBC(0, 2);
+        buttonRightPar = new JButton(")");
+        this.setNumberListener(buttonRightPar);
         panel.add(buttonRightPar, gbc);
+    }
 
-        gbc = myCalc.getButtonGBC(0, 3);
-        JButton buttonDel = new JButton("<-");
-        myCalc.setDeleteListener(buttonDel);
-        panel.add(buttonDel, gbc);
+    public void initOperators(){
 
-
-        gbc = myCalc.getButtonGBC(1, 3);
-        JButton buttonDivide = new JButton("/");
-        myCalc.setNumberListener(buttonDivide);
+        gbc = this.getButtonGBC(1, 3);
+        buttonDivide = new JButton("÷");
+        this.setNumberListener(buttonDivide);
         panel.add(buttonDivide, gbc);
 
-        gbc = myCalc.getButtonGBC(2, 3);
-        JButton buttonMultiply = new JButton("*");
-        myCalc.setNumberListener(buttonMultiply);
+        gbc = this.getButtonGBC(2, 3);
+        buttonMultiply = new JButton("×");
+        this.setNumberListener(buttonMultiply);
         panel.add(buttonMultiply, gbc);
 
-        gbc = myCalc.getButtonGBC(3, 3);
-        JButton buttonSubtract = new JButton("-");
-        myCalc.setNumberListener(buttonSubtract);
+        gbc = this.getButtonGBC(3, 3);
+        buttonSubtract = new JButton("-");
+        this.setNumberListener(buttonSubtract);
         panel.add(buttonSubtract, gbc);
 
-        gbc = myCalc.getButtonGBC(4, 3);
-        JButton buttonAdd = new JButton("+");
-        myCalc.setNumberListener(buttonAdd);
+        gbc = this.getButtonGBC(4, 3);
+        buttonAdd = new JButton("+");
+        this.setNumberListener(buttonAdd);
         panel.add(buttonAdd, gbc);
-
-        frame.setVisible(true);
     }
 
-    public void creatFrame(){
-        //Creating the Frame
-        frame = new JFrame("Calculator");
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null); // Move window to center
-        frame.setSize(300, 400);
-        frame.setResizable(false);
-    }
     public GridBagConstraints getDisplayGBC(){
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1.25;
-        // gbc.weightx = 4;
         gbc.gridwidth = 5;
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -155,9 +186,9 @@ class Calculator {
           public void actionPerformed(ActionEvent e)
           {
             String str = textArea.getText();
-            if (Calculator.invalidExpression){
+            if (invalidExpression){
                 str = "";
-            } else if (Calculator.equalsClicked){
+            } else if (equalsClicked){
                 Character bChar = button.getText().charAt(0);
                 if (!Validator.arightmeticOps.contains(bChar)){
                     str="";
@@ -168,8 +199,8 @@ class Calculator {
                 str = newStr;
             }
             textArea.setText(str);
-            Calculator.equalsClicked = false;
-            Calculator.invalidExpression = false;
+            equalsClicked = false;
+            invalidExpression = false;
           }
         };
         button.addActionListener(aListener);
@@ -205,20 +236,23 @@ class Calculator {
         {
           public void actionPerformed(ActionEvent e)
           {
-            if (Calculator.equalsClicked){
+            if (equalsClicked){
                 return;
             }
             String str = textArea.getText();
+            str = str.replace("×", "*");
+            str = str.replace("÷", "/");
+
             if (str.length()>0){
                 try{
                     double result = Evaluator.eval(str);
                     String prettyResult = prettifyResult(result);
                     textArea.setText(prettyResult);
-                    Calculator.equalsClicked = true;
+                    equalsClicked = true;
                 } catch(RuntimeException runExc){
                     System.out.println(runExc.getMessage());
                     textArea.setText("Invalid Expression");
-                    Calculator.invalidExpression=true;
+                    invalidExpression=true;
                 }
                 
 
@@ -249,6 +283,7 @@ class Calculator {
     
     public JButton setNumberColors(JButton button){
         button.setBackground(Color.LIGHT_GRAY);
+        button.setFont(new Font("Arial", Font.BOLD, 18));
         // button.setOpaque(true);
         // button.setBorderPainted(true);
         return button;

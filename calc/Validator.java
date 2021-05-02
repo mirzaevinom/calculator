@@ -2,10 +2,10 @@ import java.util.HashSet;
 import java.util.Arrays;
 
 public class Validator {
-    public static Character[] ops = {'.', '*', '-', '+', '/'};
+    public static Character[] ops = {'.', '×', '-', '+', '÷'};
     public static HashSet<Character> operators= new HashSet<>(Arrays.asList(ops));
 
-    public static Character[] temp = {'*', '-', '+', '/'};
+    public static Character[] temp = {'×', '-', '+', '÷'};
     public static HashSet<Character> arightmeticOps= new HashSet<>(Arrays.asList(temp));
 
     public static boolean checkValidity(String str){
