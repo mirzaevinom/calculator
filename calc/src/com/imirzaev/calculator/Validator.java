@@ -1,3 +1,5 @@
+package com.imirzaev.calculator;
+
 import java.util.HashSet;
 import java.util.Arrays;
 

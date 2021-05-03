@@ -1,3 +1,5 @@
+package com.imirzaev.calculator;
+
 // Copied from 
 // https://stackoverflow.com/questions/3422673/how-to-evaluate-a-math-expression-given-in-string-form
 public class Evaluator {

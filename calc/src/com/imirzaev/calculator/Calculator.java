@@ -1,3 +1,5 @@
+package com.imirzaev.calculator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -6,7 +8,6 @@ import java.util.ArrayList;
 class Calculator {
     public JFrame frame;
     public JTextArea  textArea;
-    public JButton button7, button8, button9;
     public boolean equalsClicked = false;
     public boolean invalidExpression = false;
     public JPanel panel;
