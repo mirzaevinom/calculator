@@ -1,0 +1,26 @@
+<project>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" includeantruntime="true" destdir="build/classes"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/Calculator.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.imirzaev.calculator.Calculator"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="build/jar/Calculator.jar" fork="true"/>
+    </target>
+
+    <target name="main" depends="clean,run"/>
+</project>
