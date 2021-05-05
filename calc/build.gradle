@@ -25,5 +25,11 @@ dependencies {
 }
 // end::dependencies[]
 
+test {
+    testLogging {
+        events "PASSED", "SKIPPED", "FAILED"
+    }
+}
 // tag::wrapper[]
+
 // end::wrapper[]
