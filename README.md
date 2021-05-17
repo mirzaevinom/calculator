@@ -13,8 +13,8 @@ Simple Calculator using java swing
 
  1. Clone this repo and cd to dir
  ```bash
- git clone https://github.com/mirzaevinom/java_projects.git
-cd java_projects/calc/
+ git clone https://github.com/mirzaevinom/calculator.git
+cd calculator/
  ```
  1. Build the app
  ```bash
