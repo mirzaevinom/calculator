@@ -1,8 +1,12 @@
 package com.imirzaev.calculator;
 
-// Copied from 
-// https://stackoverflow.com/questions/3422673/how-to-evaluate-a-math-expression-given-in-string-form
 public class Evaluator {
+    /**
+     * Copied from
+     * https://stackoverflow.com/questions/3422673/how-to-evaluate-a-math-expression-given-in-string-form
+     * @param str Expression to evaluate
+     * @return returns result of the expression in double
+     */
     
     public static double eval(final String str) {
         return new Object() {

@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Arrays;
 
 public class Validator {
+    /**
+     * Helper class for Calculator. That checks if entered expressions are valid, evaluatable expressions.
+     */
     public static Character[] ops = {'.', '×', '-', '+', '÷'};
     public static HashSet<Character> operators= new HashSet<>(Arrays.asList(ops));
 
@@ -11,6 +14,9 @@ public class Validator {
     public static HashSet<Character> arightmeticOps= new HashSet<>(Arrays.asList(temp));
 
     public static boolean checkValidity(String str){
+        /** 
+         * Main method of Validator
+         */
         if ( !hasValidParanthesis(str)){
             return false;
         }

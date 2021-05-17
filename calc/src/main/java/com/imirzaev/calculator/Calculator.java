@@ -6,6 +6,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 class Calculator {
+
+
     public JFrame frame;
     public JTextArea  textArea;
     public boolean equalsClicked = false;
@@ -25,6 +27,9 @@ class Calculator {
 
     }
     public void initializeUI(){
+        /**
+         * Entry point for Calculator class that initializes the UI
+         */
         this.initFrame();
         this.initPanel();
         this.initDisplayArea();
